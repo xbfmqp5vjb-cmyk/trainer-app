@@ -1,0 +1,253 @@
+      <!-- 2 Basis -->
+      <section class="panel" data-step="1" aria-labelledby="h-basis">
+        <div class="card">
+          <h2 class="step-title" id="h-basis">Basis</h2>
+          <p class="step-desc">Je gegevens voor een schema op maat.</p>
+          <label class="lbl" for="userName">Naam</label>
+          <input type="text" id="userName" name="userName" placeholder="Hoe mogen we je noemen?" autocomplete="name" />
+          <label class="lbl">Geboortedatum</label>
+          <div class="row-3">
+            <select id="geb-dag" name="geb-dag" aria-label="Dag"></select>
+            <select id="geb-maand" name="geb-maand" aria-label="Maand"></select>
+            <select id="geb-jaar" name="geb-jaar" aria-label="Jaar"></select>
+          </div>
+          <label class="lbl">Geslacht</label>
+          <div class="intake-tile-group" role="radiogroup" aria-label="Geslacht">
+            <input type="radio" name="gender" id="g-man" value="man" />
+            <label for="g-man">Man</label>
+            <input type="radio" name="gender" id="g-vrouw" value="vrouw" />
+            <label for="g-vrouw">Vrouw</label>
+            <input type="radio" name="gender" id="g-anders" value="anders" />
+            <label for="g-anders">Anders</label>
+          </div>
+          <div class="row-2">
+            <div>
+              <label class="lbl" for="weight">Gewicht (kg)</label>
+              <input type="number" id="weight" name="weight" min="30" max="250" step="0.1" placeholder="kg" inputmode="decimal" />
+            </div>
+            <div>
+              <label class="lbl" for="height">Lengte (cm)</label>
+              <input type="number" id="height" name="height" min="120" max="230" placeholder="cm" inputmode="numeric" />
+            </div>
+          </div>
+          <div class="nav">
+            <button type="button" class="btn-ghost" data-action="prev">Vorige</button>
+            <button type="button" class="btn-primary" data-action="next">Volgende</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 Hoofddoel -->
+      <section class="panel" data-step="2" aria-labelledby="h-hoofddoel">
+        <div class="card">
+          <h2 class="step-title" id="h-hoofddoel">Hoofddoel</h2>
+          <p class="step-desc">Wat wil je bereiken?</p>
+          <label class="lbl" for="primair_doel">Jouw antwoord</label>
+          <textarea id="primair_doel" name="primair_doel" class="tall" placeholder=""></textarea>
+          <p class="step-desc" id="doel-classify-hint" style="margin-top: -0.5rem; font-size: 0.78rem; color: #666">
+            Na ‘Volgende’ classificeren we je doel kort — even geduld.
+          </p>
+          <div class="nav">
+            <button type="button" class="btn-ghost" data-action="prev">Vorige</button>
+            <button type="button" class="btn-primary" data-action="next" id="btn-next-hoofddoel">Volgende</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 Tijdlijn -->
+      <section class="panel" data-step="3" aria-labelledby="h-tijdlijn">
+        <div class="card">
+          <h2 class="step-title" id="h-tijdlijn">Tijdlijn</h2>
+          <p class="step-desc">Heb je een deadline, wedstrijd of evenement?</p>
+          <div class="intake-tile-group" role="radiogroup" aria-label="Deadline">
+            <input type="radio" name="heeft_deadline" id="dl-nee" value="nee" checked />
+            <label for="dl-nee">Nee</label>
+            <input type="radio" name="heeft_deadline" id="dl-ja" value="ja" />
+            <label for="dl-ja">Ja</label>
+          </div>
+          <div id="deadline-extra" hidden>
+            <label class="lbl" for="competitie_datum">Datum</label>
+            <input type="date" id="competitie_datum" name="competitie_datum" />
+            <label class="lbl" for="competitie_naam">Wat is het evenement?</label>
+            <input type="text" id="competitie_naam" name="competitie_naam" placeholder="Bijv. halve marathon Utrecht" />
+          </div>
+          <div class="nav">
+            <button type="button" class="btn-ghost" data-action="prev">Vorige</button>
+            <button type="button" class="btn-primary" data-action="next">Volgende</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 Conditioneel -->
+      <section class="panel" data-step="4" aria-labelledby="h-cond">
+        <div class="card">
+          <h2 class="step-title" id="h-cond">Dieper op je doel</h2>
+          <p class="step-desc" id="intake-cond-intro">Vul aan wat van toepassing is.</p>
+          <div id="intake-conditional-root"></div>
+          <div class="nav">
+            <button type="button" class="btn-ghost" data-action="prev">Vorige</button>
+            <button type="button" class="btn-primary" data-action="next">Volgende</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 Trainingshistorie -->
+      <section class="panel" data-step="5" aria-labelledby="h-th">
+        <div class="card">
+          <h2 class="step-title" id="h-th">Trainingshistorie</h2>
+          <p class="step-desc">Hoe lang train je al?</p>
+          <div class="intake-tile-group intake-tile-group--stack" role="radiogroup" aria-label="Trainingservaring">
+            <input type="radio" name="th_jaren" id="th-n0" value="nooit" />
+            <label for="th-n0">Nooit</label>
+            <input type="radio" name="th_jaren" id="th-n1" value="m1" />
+            <label for="th-n1">Minder dan 1 jaar</label>
+            <input type="radio" name="th_jaren" id="th-n2" value="y1_3" />
+            <label for="th-n2">1–3 jaar</label>
+            <input type="radio" name="th_jaren" id="th-n3" value="y3_5" />
+            <label for="th-n3">3–5 jaar</label>
+            <input type="radio" name="th_jaren" id="th-n4" value="y5p" />
+            <label for="th-n4">5+ jaar</label>
+          </div>
+          <label class="lbl" for="th_mislukt">Wat heeft in het verleden niet gewerkt? (optioneel)</label>
+          <textarea id="th_mislukt" name="th_mislukt" rows="3" placeholder="Optioneel…"></textarea>
+          <div class="nav">
+            <button type="button" class="btn-ghost" data-action="prev">Vorige</button>
+            <button type="button" class="btn-primary" data-action="next">Volgende</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 Leefstijl -->
+      <section class="panel" data-step="6" aria-labelledby="h-leef">
+        <div class="card">
+          <h2 class="step-title" id="h-leef">Leefstijl</h2>
+          <p class="step-desc">Werkdag</p>
+          <div class="intake-tile-group" role="radiogroup" aria-label="Werkdag activiteit">
+            <input type="radio" name="ls_neat" id="ls-zit" value="zittend" />
+            <label for="ls-zit">Zittend</label>
+            <input type="radio" name="ls_neat" id="ls-licht" value="licht_actief" />
+            <label for="ls-licht">Licht actief</label>
+            <input type="radio" name="ls_neat" id="ls-act" value="actief" />
+            <label for="ls-act">Actief</label>
+            <input type="radio" name="ls_neat" id="ls-zeer" value="zeer_actief" />
+            <label for="ls-zeer">Zeer actief</label>
+          </div>
+          <label class="lbl">Stressniveau (1 = laag, 10 = hoog)</label>
+          <div class="intake-tile-group intake-tile-group--stress" role="radiogroup" aria-label="Stress">
+            <input type="radio" name="stressniveau" id="st-1" value="1" />
+            <label for="st-1">1</label>
+            <input type="radio" name="stressniveau" id="st-2" value="2" />
+            <label for="st-2">2</label>
+            <input type="radio" name="stressniveau" id="st-3" value="3" />
+            <label for="st-3">3</label>
+            <input type="radio" name="stressniveau" id="st-4" value="4" />
+            <label for="st-4">4</label>
+            <input type="radio" name="stressniveau" id="st-5" value="5" />
+            <label for="st-5">5</label>
+            <input type="radio" name="stressniveau" id="st-6" value="6" />
+            <label for="st-6">6</label>
+            <input type="radio" name="stressniveau" id="st-7" value="7" />
+            <label for="st-7">7</label>
+            <input type="radio" name="stressniveau" id="st-8" value="8" />
+            <label for="st-8">8</label>
+            <input type="radio" name="stressniveau" id="st-9" value="9" />
+            <label for="st-9">9</label>
+            <input type="radio" name="stressniveau" id="st-10" value="10" />
+            <label for="st-10">10</label>
+          </div>
+          <label class="lbl">Slaap (gemiddeld per nacht)</label>
+          <div class="intake-tile-group" role="radiogroup" aria-label="Slaap">
+            <input type="radio" name="slaap_uren" id="sl-1" value="lt6" />
+            <label for="sl-1">&lt; 6 u</label>
+            <input type="radio" name="slaap_uren" id="sl-2" value="6_7" />
+            <label for="sl-2">6–7 u</label>
+            <input type="radio" name="slaap_uren" id="sl-3" value="7_8" />
+            <label for="sl-3">7–8 u</label>
+            <input type="radio" name="slaap_uren" id="sl-4" value="8p" />
+            <label for="sl-4">8+ u</label>
+          </div>
+          <label class="lbl" for="voeding_globaal">Voeding globaal</label>
+          <p class="step-desc" style="margin-top: -0.35rem">Beschrijf wat je gemiddeld eet op een dag</p>
+          <textarea id="voeding_globaal" name="voeding_globaal" class="tall" placeholder=""></textarea>
+          <div class="nav">
+            <button type="button" class="btn-ghost" data-action="prev">Vorige</button>
+            <button type="button" class="btn-primary" data-action="next">Volgende</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 Planning -->
+      <section class="panel" data-step="7" aria-labelledby="h-plan2">
+        <div class="card">
+          <h2 class="step-title" id="h-plan2">Planning</h2>
+          <label class="lbl">Dagen per week</label>
+          <div class="intake-tile-group intake-tile-group--d7" role="radiogroup" aria-label="Dagen per week">
+            <input type="radio" name="trainingsdagen_per_week" id="d1" value="1" />
+            <label for="d1">1</label>
+            <input type="radio" name="trainingsdagen_per_week" id="d2" value="2" />
+            <label for="d2">2</label>
+            <input type="radio" name="trainingsdagen_per_week" id="d3" value="3" />
+            <label for="d3">3</label>
+            <input type="radio" name="trainingsdagen_per_week" id="d4" value="4" checked />
+            <label for="d4">4</label>
+            <input type="radio" name="trainingsdagen_per_week" id="d5" value="5" />
+            <label for="d5">5</label>
+            <input type="radio" name="trainingsdagen_per_week" id="d6" value="6" />
+            <label for="d6">6</label>
+            <input type="radio" name="trainingsdagen_per_week" id="d7" value="7" />
+            <label for="d7">7</label>
+          </div>
+          <label class="lbl">Sessies per dag</label>
+          <div class="intake-tile-group" role="radiogroup" aria-label="Sessies per dag">
+            <input type="radio" name="sessies_per_dag" id="sd1" value="1" checked />
+            <label for="sd1">1</label>
+            <input type="radio" name="sessies_per_dag" id="sd2" value="2" />
+            <label for="sd2">2</label>
+          </div>
+          <label class="lbl">Tijd per training</label>
+          <div class="intake-tile-group intake-tile-group--wrap" role="radiogroup" aria-label="Tijd per training">
+            <input type="radio" name="sessieduur_minuten" id="tm30" value="30" />
+            <label for="tm30">30 min</label>
+            <input type="radio" name="sessieduur_minuten" id="tm45" value="45" checked />
+            <label for="tm45">45 min</label>
+            <input type="radio" name="sessieduur_minuten" id="tm60" value="60" />
+            <label for="tm60">60 min</label>
+            <input type="radio" name="sessieduur_minuten" id="tm90" value="90" />
+            <label for="tm90">90 min</label>
+            <input type="radio" name="sessieduur_minuten" id="tm120" value="120" />
+            <label for="tm120">2 u+</label>
+          </div>
+          <label class="lbl">Locatie</label>
+          <div class="intake-tile-group" role="radiogroup" aria-label="Locatie">
+            <input type="radio" name="pl_locatie" id="pl-gym" value="Sportschool" checked />
+            <label for="pl-gym">Sportschool</label>
+            <input type="radio" name="pl_locatie" id="pl-thuis" value="Thuis" />
+            <label for="pl-thuis">Thuis</label>
+            <input type="radio" name="pl_locatie" id="pl-buiten" value="Buiten" />
+            <label for="pl-buiten">Buiten</label>
+            <input type="radio" name="pl_locatie" id="pl-combo" value="Combinatie" />
+            <label for="pl-combo">Combinatie</label>
+          </div>
+          <label class="lbl" for="equipment">Apparatuur (optioneel)</label>
+          <textarea id="equipment" name="equipment" rows="3" placeholder="Optioneel…"></textarea>
+          <div class="nav">
+            <button type="button" class="btn-ghost" data-action="prev">Vorige</button>
+            <button type="button" class="btn-primary" data-action="next">Volgende</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 Blessures -->
+      <section class="panel" data-step="8" aria-labelledby="h-bl">
+        <div class="card">
+          <h2 class="step-title" id="h-bl">Blessures</h2>
+          <label class="lbl" for="blessures_of_beperkingen">Huidige blessures of beperkingen</label>
+          <textarea id="blessures_of_beperkingen" name="blessures_of_beperkingen" class="tall" placeholder=""></textarea>
+          <label class="lbl" for="blessure_geschiedenis">Blessuregeschiedenis (optioneel)</label>
+          <textarea id="blessure_geschiedenis" name="blessure_geschiedenis" rows="3" placeholder="Optioneel…"></textarea>
+          <div class="nav">
+            <button type="button" class="btn-ghost" data-action="prev">Vorige</button>
+            <button type="button" class="btn-primary" data-action="next">Volgende</button>
+          </div>
+        </div>
+      </section>
