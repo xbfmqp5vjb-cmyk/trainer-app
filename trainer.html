@@ -4204,36 +4204,53 @@
   <script>
     (function () {
       /**
-       * API-basis: op Railway (of elke niet-lokale host) → huidige origin.
-       * Op localhost/127.0.0.1 alleen op poort 3000 → zelfde origin; anders → http://localhost:3000 (Node-proxy).
-       * file:// → http://localhost:3000 (alleen dev).
+       * API-basis: elke host die géén localhost/127.0.0.1 is → altijd window.location.origin (Railway, enz.).
+       * Alleen op localhost/127.0.0.1: file:// of andere poort dan 3000 → http://localhost:3000; op :3000 → origin.
        */
       var API_DEV_PROXY_ORIGIN = "http://localhost:3000";
       var API_DEV_PROXY_PORT = "3000";
+      function isLocalDevHostname() {
+        try {
+          var h = String(window.location.hostname || "").toLowerCase();
+          return h === "localhost" || h === "127.0.0.1" || h === "::1";
+        } catch (e0) {
+          return false;
+        }
+      }
       function getApiBaseUrl() {
         try {
+          if (!isLocalDevHostname()) {
+            return window.location.origin;
+          }
           if (location.protocol !== "http:" && location.protocol !== "https:") {
             return API_DEV_PROXY_ORIGIN;
           }
-          var h = location.hostname;
           var p = String(location.port || "");
-          if (h === "localhost" || h === "127.0.0.1") {
-            if (p === API_DEV_PROXY_PORT) return location.origin;
-            return API_DEV_PROXY_ORIGIN;
-          }
-          return location.origin;
+          if (p === API_DEV_PROXY_PORT) return window.location.origin;
+          return API_DEV_PROXY_ORIGIN;
         } catch (e1) {
-          /* ignore */
+          try {
+            if (!isLocalDevHostname() && window.location && window.location.origin) {
+              return window.location.origin;
+            }
+          } catch (e2) {
+            /* ignore */
+          }
+          return API_DEV_PROXY_ORIGIN;
         }
-        return API_DEV_PROXY_ORIGIN;
       }
       function getApiUrl(path) {
         var base = getApiBaseUrl().replace(/\/$/, "");
         var rel = path.charAt(0) === "/" ? path : "/" + path;
         return base + rel;
       }
-      var PROXY_GENERATE_URL = getApiUrl("/api/generate");
-      var PROXY_GENERATE_BLOCK_URL = getApiUrl("/api/generate-block");
+      console.log('API base URL:', getApiBaseUrl());
+      function getProxyGenerateUrl() {
+        return getApiUrl("/api/generate");
+      }
+      function getProxyGenerateBlockUrl() {
+        return getApiUrl("/api/generate-block");
+      }
 
       function isTrainingCustomerMode() {
         try {
@@ -4889,7 +4906,7 @@
           "Geef alleen een JSON array terug zoals [\"kracht\", \"uithoudingsvermogen\"]. Geen andere tekst.\n\nDoel:\n" +
           goalText;
         try {
-          var res = await fetch(PROXY_GENERATE_URL, {
+          var res = await fetch(getProxyGenerateUrl(), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -7524,7 +7541,7 @@
             })
           };
           if (doneCoachAbort) fetchOpts.signal = doneCoachAbort.signal;
-          var res = await fetch(PROXY_GENERATE_URL, fetchOpts);
+          var res = await fetch(getProxyGenerateUrl(), fetchOpts);
           var rawText = await res.text();
           var json = null;
           try {
@@ -8354,7 +8371,7 @@
         setLoadingUi(true, "Schema wordt gegenereerd…");
 
         try {
-          var res = await fetch(PROXY_GENERATE_URL, {
+          var res = await fetch(getProxyGenerateUrl(), {
             method: "POST",
             signal: abortController.signal,
             headers: {
@@ -8530,7 +8547,7 @@
             completionLog: readCompletionLog(),
             coachDoneReactions: coachRx
           };
-          var res = await fetch(PROXY_GENERATE_BLOCK_URL, {
+          var res = await fetch(getProxyGenerateBlockUrl(), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -9435,7 +9452,7 @@
           typingShownAt = Date.now();
 
           var attachment = buildCoachProfileAttachment();
-          var res = await fetch(PROXY_GENERATE_URL, {
+          var res = await fetch(getProxyGenerateUrl(), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
