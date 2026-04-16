@@ -4204,46 +4204,36 @@
   <script>
     (function () {
       /**
-       * Productie: zelfde host → /api/generate. Lokaal: alleen op :3000 relatief; anders proxy op :3000.
-       * file:// → http://127.0.0.1:3000 (alleen dev).
+       * API-basis: op Railway (of elke niet-lokale host) → huidige origin.
+       * Op localhost/127.0.0.1 alleen op poort 3000 → zelfde origin; anders → http://localhost:3000 (Node-proxy).
+       * file:// → http://localhost:3000 (alleen dev).
        */
-      function getProxyGenerateUrl() {
+      var API_DEV_PROXY_ORIGIN = "http://localhost:3000";
+      var API_DEV_PROXY_PORT = "3000";
+      function getApiBaseUrl() {
         try {
           if (location.protocol !== "http:" && location.protocol !== "https:") {
-            return "http://127.0.0.1:3000/api/generate";
+            return API_DEV_PROXY_ORIGIN;
           }
           var h = location.hostname;
           var p = String(location.port || "");
           if (h === "localhost" || h === "127.0.0.1") {
-            if (p === "3000") return "/api/generate";
-            return "http://127.0.0.1:3000/api/generate";
+            if (p === API_DEV_PROXY_PORT) return location.origin;
+            return API_DEV_PROXY_ORIGIN;
           }
-          return "/api/generate";
+          return location.origin;
         } catch (e1) {
           /* ignore */
         }
-        return "http://127.0.0.1:3000/api/generate";
+        return API_DEV_PROXY_ORIGIN;
       }
-      var PROXY_GENERATE_URL = getProxyGenerateUrl();
-
-      function getProxyGenerateBlockUrl() {
-        try {
-          if (location.protocol !== "http:" && location.protocol !== "https:") {
-            return "http://127.0.0.1:3000/api/generate-block";
-          }
-          var h = location.hostname;
-          var p = String(location.port || "");
-          if (h === "localhost" || h === "127.0.0.1") {
-            if (p === "3000") return "/api/generate-block";
-            return "http://127.0.0.1:3000/api/generate-block";
-          }
-          return "/api/generate-block";
-        } catch (e1) {
-          /* ignore */
-        }
-        return "http://127.0.0.1:3000/api/generate-block";
+      function getApiUrl(path) {
+        var base = getApiBaseUrl().replace(/\/$/, "");
+        var rel = path.charAt(0) === "/" ? path : "/" + path;
+        return base + rel;
       }
-      var PROXY_GENERATE_BLOCK_URL = getProxyGenerateBlockUrl();
+      var PROXY_GENERATE_URL = getApiUrl("/api/generate");
+      var PROXY_GENERATE_BLOCK_URL = getApiUrl("/api/generate-block");
 
       function isTrainingCustomerMode() {
         try {
